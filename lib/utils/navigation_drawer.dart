@@ -5,7 +5,8 @@ import 'package:parangessos_routes/utils/constants.dart';
 import 'package:parangessos_routes/views/articles_pages/articles.dart';
 import 'package:parangessos_routes/views/forum_pages/forum.dart';
 import 'package:parangessos_routes/views/home.dart';
-import 'package:parangessos_routes/views/profil_pages/login_register.dart';
+import 'package:parangessos_routes/views/profil_pages/create_account.dart';
+import 'package:parangessos_routes/views/profil_pages/login.dart';
 import 'package:parangessos_routes/views/profil_pages/show_image.dart';
 import 'package:parangessos_routes/views/settings.dart';
 import 'package:parangessos_routes/views/useful_resources.dart';
@@ -222,12 +223,12 @@ class NavigationDrawerWidget extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => LogOrRegPage(title: 'Login'),
+          builder: (context) => LoginPage(title: 'Login'),
         ));
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => LogOrRegPage(title: 'Create Account'),
+          builder: (context) => RegisterPage(title: 'Create Account'),
         ));
         break;
       case 2:
