@@ -1,27 +1,24 @@
-import 'dart:html';
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:parangessos_routes/models/profil/user.dart';
+import 'package:parangessos_routes/provider/my_themes.dart';
 import 'package:parangessos_routes/utils/constants.dart';
 import 'package:parangessos_routes/views/articles_pages/articles.dart';
 import 'package:parangessos_routes/views/forum_pages/forum.dart';
 import 'package:parangessos_routes/views/home.dart';
 import 'package:parangessos_routes/views/profil_pages/create_account.dart';
 import 'package:parangessos_routes/views/profil_pages/login.dart';
-import 'package:parangessos_routes/views/profil_pages/show_image.dart';
-import 'package:parangessos_routes/views/settings.dart';
+import 'package:parangessos_routes/views/profil_pages/profil.dart';
 import 'package:parangessos_routes/views/useful_resources.dart';
 import 'dart:ui' as ui;
+import 'package:provider/provider.dart';
+import 'change_theme.dart';
 
-import 'package:universal_platform/universal_platform.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
   NavigationDrawerWidget({Key? key, required this.title}) : super(key: key);
   final String title;
-
-
 
   @override
   _NavigationDrawerWidgetState createState() => _NavigationDrawerWidgetState();
@@ -30,8 +27,9 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
 
   final padding = EdgeInsets.symmetric(horizontal: 20);
   User? user;
-  bool isChecked = false;
   bool isEnabled = true;
+  bool isChecked = false;
+  var image;
 
 
   @override
@@ -40,9 +38,14 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
     user = userLog;
     String pseudo;
     String urlImage;
+    if (Provider.of<ThemeProvider>(context).isDarkMode){
+      isChecked = true;
+    } else {
+      isChecked = false;
+    }
     if (user == null){
       pseudo = 'Visitor';
-      urlImage = '';
+      urlImage = 'https://paranges-sos.com/images/profils/logo_ailes_1080.png';
     } else {
       if (user!.pseudo.isNotEmpty){
         pseudo = user!.pseudo;
@@ -52,12 +55,12 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
       if (user!.photoUrl != null || user!.photoUrl!.isNotEmpty) {
         urlImage = user!.photoUrl!;
       } else {
-        urlImage = "";
+        urlImage = "https://paranges-sos.com/images/profils/logo_ailes_1080.png";
       }
     }
     return Drawer(
       child: Material(
-        color: Color.fromRGBO(99, 164, 255, 100),
+        color: Theme.of(context).backgroundColor,
         child: ListView(
           children: <Widget>[
             buildHeader(
@@ -66,9 +69,10 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
               pseudo: pseudo,
               onClicked: () => Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ShowImage(
+                  builder: (context) => ProfilPage(
                     pseudo: pseudo,
                     urlImage: urlImage,
+                    title: 'Profil',
                   ),
                 ),
               ),
@@ -76,7 +80,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
             Container(
               padding:  padding,
               child: Divider(
-                color: Colors.white70,
+                color: Theme.of(context).dividerColor,
               ),
             ),
             Container(
@@ -168,11 +172,13 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
                     ),
                   ),
                   SizedBox(height: size.height * 0.02),
-                  Divider(color: Colors.white70,),
+                  Divider(
+                    color: Theme.of(context).dividerColor,
+                  ),
                   Visibility(
                     visible: changeVisibility7(),
                     child: SizedBox(
-                        height: size.height * 0.02,
+                      height: size.height * 0.02,
                     ),
                   ),
                   Visibility(
@@ -183,35 +189,27 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
                       onClicked: () => selectedItem(context, 6),
                     ),
                   ),
+                  SizedBox(height: size.height * 0.02),
+                  buildMenuItem(
+                    text: 'Settings',
+                    icon: Icons.settings,
+                    onClicked: () => selectedItem(context, 7),
+                  ),
+                  SizedBox(height: size.height * 0.02),
                   Row(
-                    children: <Widget>[
+                    children: [
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Text(
                           'Switch to Dark/light Mode',
                           style: TextStyle(
-                              color: Colors.white
+                              color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: NeumorphicSwitch(
-                          style: NeumorphicSwitchStyle(
-                            trackDepth: 10,
-                            thumbShape: NeumorphicShape.concave,
-                            activeThumbColor: Colors.green,
-                            inactiveThumbColor: Colors.blueGrey,
-                          ),
-                          duration: Duration(milliseconds: 400),
-                          isEnabled: isEnabled,
-                          value: isChecked,
-                          onChanged:  (value) {
-                            setState(() {
-                              isChecked = value;
-                            });
-                          },
-                        ),
+                        child: ChangeSwitchTheme(),
                       ),
                     ],
                   ),
@@ -223,15 +221,6 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
       ),
     );
   }
-
-  updateState() {
-    setState(() {
-      AdaptiveTheme.of(context).toggleThemeMode();
-    });
-  }
-
-
-
 
   Widget buildHeader({
     required Size size,
@@ -253,7 +242,10 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
           Spacer(),
           CircleAvatar(
             radius: 24,
-            child: Icon(Icons.edit),
+            child: Icon(
+              Icons.edit,
+              color: Theme.of(context).iconTheme.color,
+            ),
           ),
         ],
       ),
@@ -266,20 +258,18 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
     required IconData icon,
     ui.VoidCallback? onClicked,
   }){
-    final color = Colors.white;
-    final hoverColor = Colors.white70;
     return ListTile(
       leading: Icon(
         icon,
-        color: color,
+        color: Theme.of(context).iconTheme.color,
       ),
       title: Text(
           text,
           style: TextStyle(
-              color: color,
+              color: Theme.of(context).primaryColor,
           ),
       ),
-      hoverColor: hoverColor,
+      hoverColor: Theme.of(context).hoverColor,
       onTap: onClicked,
     );
   }

@@ -20,7 +20,7 @@ class Api {
     try {
       final response = await http.post(
           Uri.parse(url),
-          /*headers: headers,*/
+          headers: headers,
           body: {
             "pseudo": pseudo,
             "password": password
@@ -55,12 +55,17 @@ class Api {
     }else if (UniversalPlatform.isWeb || UniversalPlatform.isIOS){
       url = "http://localhost:3000/register";
     }
+    Map<String, String> headers = {
+      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+    };
     try {
-      final response = await http.post(Uri.parse(url),
-        body: jsonEncode({
+      final response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: {
           "pseudo": pseudo,
           "password": password,
-          "mail": mail}),
+          "mail": mail},
       );
       print(response.statusCode);
       if (response.statusCode == 200) {

@@ -6,9 +6,11 @@ class Header extends StatelessWidget {
   const Header({
     Key? key,
     required this.size,
+    required this.color,
   }) : super(key: key);
 
   final Size size;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {

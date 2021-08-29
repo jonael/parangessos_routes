@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class HomeTextsStyle {
-  Widget homeTextsSubTitle(data, fontSize, fontWeight) {
+  Widget homeTextsSubTitle(data, fontSize, fontWeight, Color? color) {
     if (UniversalPlatform.isIOS) {
       return new DefaultTextStyle(
           style: new TextStyle(
             fontSize: fontSize,
             fontWeight: fontWeight,
+            color: color,
           ),
           child: new Text(data));
     } else {
@@ -17,25 +18,26 @@ class HomeTextsStyle {
         style: new TextStyle(
           fontSize: fontSize,
           fontWeight: fontWeight,
+          color: color,
         ),
       );
     }
   }
 
-  Widget homeTextsText(data, color, fontSize) {
+  Widget homeTextsText(data, fontSize, Color? color) {
     if (UniversalPlatform.isIOS) {
       return new DefaultTextStyle(
           style: new TextStyle(
-            color: color,
             fontSize: fontSize,
+            color: color,
           ),
           child: new Text(data));
     } else {
       return new Text(
         data,
         style: new TextStyle(
-          color: color,
           fontSize: fontSize,
+          color: color,
         ),
       );
     }
