@@ -1,5 +1,8 @@
+import 'dart:html';
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:parangessos_routes/models/profil/user.dart';
 import 'package:parangessos_routes/utils/constants.dart';
 import 'package:parangessos_routes/views/articles_pages/articles.dart';
@@ -10,19 +13,48 @@ import 'package:parangessos_routes/views/profil_pages/login.dart';
 import 'package:parangessos_routes/views/profil_pages/show_image.dart';
 import 'package:parangessos_routes/views/settings.dart';
 import 'package:parangessos_routes/views/useful_resources.dart';
+import 'dart:ui' as ui;
 
-class NavigationDrawerWidget extends StatelessWidget {
+import 'package:universal_platform/universal_platform.dart';
+
+class NavigationDrawerWidget extends StatefulWidget {
   NavigationDrawerWidget({Key? key, required this.title}) : super(key: key);
   final String title;
-  final User? user = userLog;
+
+
+
+  @override
+  _NavigationDrawerWidgetState createState() => _NavigationDrawerWidgetState();
+}
+class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
+
   final padding = EdgeInsets.symmetric(horizontal: 20);
-  final pseudo = 'Hello visitor';
-  final urlImage = 'https://picsum.photos/seed/picsum/200/300';
+  User? user;
+  bool isChecked = false;
+  bool isEnabled = true;
+
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    user = userLog;
+    String pseudo;
+    String urlImage;
+    if (user == null){
+      pseudo = 'Visitor';
+      urlImage = '';
+    } else {
+      if (user!.pseudo.isNotEmpty){
+        pseudo = user!.pseudo;
+      } else {
+        pseudo = 'Visitor';
+      }
+      if (user!.photoUrl != null || user!.photoUrl!.isNotEmpty) {
+        urlImage = user!.photoUrl!;
+      } else {
+        urlImage = "";
+      }
+    }
     return Drawer(
       child: Material(
         color: Color.fromRGBO(99, 164, 255, 100),
@@ -151,11 +183,37 @@ class NavigationDrawerWidget extends StatelessWidget {
                       onClicked: () => selectedItem(context, 6),
                     ),
                   ),
-                  SizedBox(height: size.height * 0.02),
-                  buildMenuItem(
-                    text: 'Settings',
-                    icon: Icons.settings,
-                    onClicked: () => selectedItem(context, 7),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          'Switch to Dark/light Mode',
+                          style: TextStyle(
+                              color: Colors.white
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: NeumorphicSwitch(
+                          style: NeumorphicSwitchStyle(
+                            trackDepth: 10,
+                            thumbShape: NeumorphicShape.concave,
+                            activeThumbColor: Colors.green,
+                            inactiveThumbColor: Colors.blueGrey,
+                          ),
+                          duration: Duration(milliseconds: 400),
+                          isEnabled: isEnabled,
+                          value: isChecked,
+                          onChanged:  (value) {
+                            setState(() {
+                              isChecked = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -166,11 +224,20 @@ class NavigationDrawerWidget extends StatelessWidget {
     );
   }
 
+  updateState() {
+    setState(() {
+      AdaptiveTheme.of(context).toggleThemeMode();
+    });
+  }
+
+
+
+
   Widget buildHeader({
     required Size size,
     required String urlImage,
     required String pseudo,
-    required VoidCallback onClicked,
+    required ui.VoidCallback onClicked,
   }) => InkWell(
     onTap: onClicked,
     child: Container(
@@ -178,10 +245,8 @@ class NavigationDrawerWidget extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(
-              urlImage,
-            ),
+            radius: 35,
+            backgroundImage: NetworkImage(urlImage),
           ),
           SizedBox(width: size.width * 0.01,),
           Text(pseudo),
@@ -195,10 +260,11 @@ class NavigationDrawerWidget extends StatelessWidget {
     ),
   );
 
+
   Widget buildMenuItem({
     required String text,
     required IconData icon,
-    VoidCallback? onClicked,
+    ui.VoidCallback? onClicked,
   }){
     final color = Colors.white;
     final hoverColor = Colors.white70;
@@ -257,11 +323,6 @@ class NavigationDrawerWidget extends StatelessWidget {
           builder: (context) => HomePage(title: 'Home'),
         ));
         break;
-      case 7:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => SettingsPage(title: 'Settings'),
-        ));
-        break;
       default :
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => HomePage(title: 'Home',),
@@ -271,32 +332,32 @@ class NavigationDrawerWidget extends StatelessWidget {
   }
 
   changeVisibility1() {
-    if(title != 'Login' && user == null) {
+    if(widget.title != 'Login' && user == null) {
         return true;
     } else return false;
   }
   changeVisibility2() {
-    if(title != 'Create Account' && user == null){
+    if(widget.title != 'Create Account' && user == null){
       return true;
     } else return false;
   }
   changeVisibility3() {
-    if(title != 'Home'){
+    if(widget.title != 'Home'){
       return true;
     } else return false;
   }
   changeVisibility4() {
-    if(title != 'Articles' && user != null){
+    if(widget.title != 'Articles' && user != null){
       return true;
     } else return false;
   }
   changeVisibility5() {
-    if(title != 'Forum' && user != null){
+    if(widget.title != 'Forum' && user != null){
       return true;
     } else return false;
   }
   changeVisibility6() {
-    if(title != 'Useful Resources' && user != null){
+    if(widget.title != 'Useful Resources' && user != null){
       return true;
     } else return false;
   }
@@ -306,3 +367,4 @@ class NavigationDrawerWidget extends StatelessWidget {
     } else return false;
   }
 }
+

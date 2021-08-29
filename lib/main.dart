@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
   const MyApp ({Key? key, this.savedThemeMode}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       dark: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.pink[100],
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.grey[850],
         iconTheme: const IconThemeData(
         color: Colors.red,
         ),
