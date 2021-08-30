@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-import 'package:parangessos_routes/models/profil/user.dart';
-import 'package:parangessos_routes/utils/constants.dart';
+import 'package:par_anges_sos/models/profil/user.dart';
+import 'package:par_anges_sos/utils/constants.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class Api {

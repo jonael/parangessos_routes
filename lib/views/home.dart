@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:parangessos_routes/utils/constants.dart';
-import 'package:parangessos_routes/utils/header.dart';
-import 'package:parangessos_routes/utils/my_animation.dart';
-import 'package:parangessos_routes/utils/navigation_drawer.dart';
-import 'package:parangessos_routes/utils/text_sytle.dart';
+import 'package:par_anges_sos/utils/constants.dart';
+import 'package:par_anges_sos/utils/header.dart';
+import 'package:par_anges_sos/utils/my_animation.dart';
+import 'package:par_anges_sos/utils/navigation_drawer.dart';
+import 'package:par_anges_sos/utils/text_sytle.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class HomePage extends StatefulWidget {

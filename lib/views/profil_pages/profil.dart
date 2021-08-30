@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:parangessos_routes/utils/navigation_drawer.dart';
+import 'package:par_anges_sos/utils/navigation_drawer.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class ProfilPage extends StatefulWidget {

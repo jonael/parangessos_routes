@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:parangessos_routes/provider/my_themes.dart';
-import 'package:parangessos_routes/views/home.dart';
+import 'package:par_anges_sos/provider/my_themes.dart';
+import 'package:par_anges_sos/views/home.dart';
 import 'package:provider/provider.dart';
 
 Future main() async {

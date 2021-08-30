@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:parangessos_routes/controllers/api.dart';
-import 'package:parangessos_routes/utils/constants.dart';
-import 'package:parangessos_routes/utils/navigation_drawer.dart';
-import 'package:parangessos_routes/views/profil_pages/login.dart';
-
+import 'package:par_anges_sos/controllers/api.dart';
+import 'package:par_anges_sos/utils/constants.dart';
+import 'package:par_anges_sos/utils/navigation_drawer.dart';
 import '../home.dart';
+import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key? key, required this.title}) : super(key: key);

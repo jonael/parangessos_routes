@@ -23,7 +23,7 @@ class MyThemes {
   static final darkTheme = ThemeData(
     scaffoldBackgroundColor: Colors.blueGrey[900],
     primaryColor: Colors.black,
-    highlightColor: Colors.white70,
+    highlightColor: Color.fromRGBO(255, 255, 255, 0.1),
     backgroundColor: Colors.blue[200],
     textTheme: TextTheme(
       headline1: TextStyle(color: Colors.pink[900]),
@@ -47,7 +47,7 @@ class MyThemes {
   static final lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.grey[100],
     primaryColor: Colors.white,
-    highlightColor: Colors.black54,
+    highlightColor: Color.fromRGBO(0, 0, 0, 0.1),
     backgroundColor: Colors.blue[800],
     textTheme: TextTheme(
       headline1: TextStyle(color: Colors.blue[900]),

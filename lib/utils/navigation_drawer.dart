@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:parangessos_routes/models/profil/user.dart';
-import 'package:parangessos_routes/provider/my_themes.dart';
-import 'package:parangessos_routes/utils/constants.dart';
-import 'package:parangessos_routes/views/articles_pages/articles.dart';
-import 'package:parangessos_routes/views/forum_pages/forum.dart';
-import 'package:parangessos_routes/views/home.dart';
-import 'package:parangessos_routes/views/profil_pages/create_account.dart';
-import 'package:parangessos_routes/views/profil_pages/login.dart';
-import 'package:parangessos_routes/views/profil_pages/profil.dart';
-import 'package:parangessos_routes/views/useful_resources.dart';
+import 'package:par_anges_sos/models/profil/user.dart';
+import 'package:par_anges_sos/provider/my_themes.dart';
+import 'package:par_anges_sos/views/articles_pages/articles.dart';
+import 'package:par_anges_sos/views/forum_pages/forum.dart';
+import 'package:par_anges_sos/views/home.dart';
+import 'package:par_anges_sos/views/profil_pages/create_account.dart';
+import 'package:par_anges_sos/views/profil_pages/login.dart';
+import 'package:par_anges_sos/views/profil_pages/profil.dart';
+import 'package:par_anges_sos/views/useful_resources.dart';
 import 'dart:ui' as ui;
 import 'package:provider/provider.dart';
 import 'change_theme.dart';
+import 'constants.dart';
 
 
 class NavigationDrawerWidget extends StatefulWidget {
