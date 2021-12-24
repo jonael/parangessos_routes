@@ -1,24 +1,20 @@
+import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:par_anges_sos/models/profil/user.dart';
-import 'package:par_anges_sos/provider/my_themes.dart';
-import 'package:par_anges_sos/views/articles_pages/articles.dart';
-import 'package:par_anges_sos/views/forum_pages/forum.dart';
-import 'package:par_anges_sos/views/home.dart';
-import 'package:par_anges_sos/views/profil_pages/create_account.dart';
-import 'package:par_anges_sos/views/profil_pages/login.dart';
-import 'package:par_anges_sos/views/profil_pages/profil.dart';
-import 'package:par_anges_sos/views/useful_resources.dart';
+import 'package:parangessos_routes/models/profil/user.dart';
+import 'package:parangessos_routes/provider/my_themes.dart';
+import 'package:parangessos_routes/provider/router.dart';
+import 'package:parangessos_routes/utils/constants.dart';
 import 'dart:ui' as ui;
 import 'package:provider/provider.dart';
 import 'change_theme.dart';
-import 'constants.dart';
 
 
 class NavigationDrawerWidget extends StatefulWidget {
-  NavigationDrawerWidget({Key? key, required this.title}) : super(key: key);
+  NavigationDrawerWidget({Key? key, required this.title, required this.context}) : super(key: key);
   final String title;
+  final BuildContext context;
 
   @override
   _NavigationDrawerWidgetState createState() => _NavigationDrawerWidgetState();
@@ -45,7 +41,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
     }
     if (user == null){
       pseudo = 'Visitor';
-      urlImage = 'https://paranges-sos.com/images/profils/logo_ailes_1080.png';
+      urlImage = 'assets/images/logo_ailes_1080.png';
     } else {
       if (user!.pseudo.isNotEmpty){
         pseudo = user!.pseudo;
@@ -55,7 +51,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
       if (user!.photoUrl != null || user!.photoUrl!.isNotEmpty) {
         urlImage = user!.photoUrl!;
       } else {
-        urlImage = "https://paranges-sos.com/images/profils/logo_ailes_1080.png";
+        urlImage = "assets/images/logo_ailes_1080.png";
       }
     }
     return Drawer(
@@ -67,15 +63,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
               size: size,
               urlImage: urlImage,
               pseudo: pseudo,
-              onClicked: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ProfilPage(
-                    pseudo: pseudo,
-                    urlImage: urlImage,
-                    title: 'Profil',
-                  ),
-                ),
-              ),
+              onClicked: () => context.router.push(LoginRoute(title: 'Se connecter', key: widget.key, context: widget.context)),
             ),
             Container(
               padding:  padding,
@@ -98,7 +86,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
                     child: buildMenuItem(
                       text: 'Login',
                       icon: Icons.login,
-                      onClicked: () => selectedItem(context, 0),
+                      onClicked: () => selectedItem(widget.context, 0),
                     ),
                   ),
                   Visibility(
@@ -112,7 +100,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
                     child: buildMenuItem(
                       text: 'Create Account',
                       icon: Icons.app_registration,
-                      onClicked: () => selectedItem(context, 1),
+                      onClicked: () => selectedItem(widget.context, 1),
                     ),
                   ),
                   Visibility(
@@ -126,7 +114,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
                     child: buildMenuItem(
                       text: 'Home',
                       icon: Icons.home,
-                      onClicked: () => selectedItem(context, 2),
+                      onClicked: () => selectedItem(widget.context, 2),
                     ),
                   ),
                   Visibility(
@@ -140,7 +128,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
                     child: buildMenuItem(
                       text: 'Articles',
                       icon: Icons.article,
-                      onClicked: () => selectedItem(context, 3),
+                      onClicked: () => selectedItem(widget.context, 3),
                     ),
                   ),
                   Visibility(
@@ -154,7 +142,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
                     child: buildMenuItem(
                       text: 'Forum',
                       icon: Icons.forum,
-                      onClicked: () => selectedItem(context, 4),
+                      onClicked: () => selectedItem(widget.context, 4),
                     ),
                   ),
                   Visibility(
@@ -168,7 +156,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
                     child: buildMenuItem(
                       text: 'Useful Resources',
                       icon: Icons.list,
-                      onClicked: () => selectedItem(context, 5),
+                      onClicked: () => selectedItem(widget.context, 5),
                     ),
                   ),
                   SizedBox(height: size.height * 0.02),
@@ -186,14 +174,14 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
                     child: buildMenuItem(
                       text: 'Log Off',
                       icon: Icons.logout,
-                      onClicked: () => selectedItem(context, 6),
+                      onClicked: () => selectedItem(widget.context, 6),
                     ),
                   ),
                   SizedBox(height: size.height * 0.02),
                   buildMenuItem(
                     text: 'Settings',
                     icon: Icons.settings,
-                    onClicked: () => selectedItem(context, 7),
+                    onClicked: () => selectedItem(widget.context, 7),
                   ),
                   SizedBox(height: size.height * 0.02),
                   Row(
@@ -278,45 +266,29 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
     Navigator.of(context).pop();
     switch (index) {
       case 0:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => LoginPage(title: 'Login'),
-        ));
+        context.router.push(LoginRoute(title: 'Se connecter', key: widget.key, context: widget.context));
         break;
       case 1:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => RegisterPage(title: 'Create Account'),
-        ));
+        context.router.push(RegisterRoute(title: 'Créer un compte', key: widget.key, context: widget.context));
         break;
       case 2:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => HomePage(title: 'Home',),
-        ));
+        context.router.push(HomeRoute(title: 'Accueil', key: widget.key));
         break;
       case 3:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ArticlesPage(title: 'Articles'),
-        ));
+        context.router.push(ArticlesRoute(title: 'Articles', key: widget.key));
         break;
       case 4:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ForumPage(title: 'Forum'),
-        ));
+        context.router.push(ForumRoute(title: 'Forum', key: widget.key));
         break;
       case 5:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ResourcesPage(title: 'Useful Resources',),
-        ));
+        context.router.push(ResourcesRoute(title: 'Ressources utiles', key: widget.key));
         break;
       case 6:
         userLog = null;
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => HomePage(title: 'Home'),
-        ));
+        context.router.push(HomeRoute(title: 'Accueil', key: widget.key));
         break;
       default :
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => HomePage(title: 'Home',),
-        ));
+        context.router.push(HomeRoute(title: 'Accueil', key: widget.key));
         break;
     }
   }

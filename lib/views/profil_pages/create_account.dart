@@ -31,7 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigationDrawerWidget(title: widget.title),
+      drawer: NavigationDrawerWidget(title: widget.title, context: context,),
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,

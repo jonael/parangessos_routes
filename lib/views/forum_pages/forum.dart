@@ -9,7 +9,7 @@ class ForumPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigationDrawerWidget(title: title,),
+      drawer: NavigationDrawerWidget(title: title, context: context,),
       appBar: AppBar(
         title: Text(title),
         centerTitle: true,

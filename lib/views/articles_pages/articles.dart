@@ -9,7 +9,7 @@ class ArticlesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigationDrawerWidget(title: title,),
+      drawer: NavigationDrawerWidget(title: title, context: context,),
       appBar: AppBar(
         title: Text('Articles'),
         centerTitle: true,

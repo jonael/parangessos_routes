@@ -1,3 +1,4 @@
+import 'package:draggable_fab/draggable_fab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -62,7 +63,7 @@ class _ProfilPageState extends State<ProfilPage>{
       );
     } else {
       return new Scaffold(
-          drawer: NavigationDrawerWidget(title: widget.title,),
+          drawer: NavigationDrawerWidget(title: widget.title, context: context,),
           appBar: new AppBar(
             centerTitle: true,
             title: new Text(
@@ -80,214 +81,224 @@ class _ProfilPageState extends State<ProfilPage>{
 
   Widget body() {
     Size size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      padding: EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: size.height * 0.01),
-          Center(
-            child: Container(
-              width: size.width * 0.5,
-              child: Image.network(
-                widget.urlImage,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          SizedBox(height: size.height * 0.05),
-          Column(
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          padding: EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
+          child: Column(
             children: <Widget>[
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Text(
-                      'Voulez vous être volontaire ?',
-                    ),
+              SizedBox(height: size.height * 0.01),
+              Center(
+                child: Container(
+                  width: size.width * 0.5,
+                  child: Image.network(
+                    widget.urlImage,
+                    fit: BoxFit.fill,
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: NeumorphicSwitch(
-                      style: NeumorphicSwitchStyle(
-                        lightSource: LightSource.topLeft,
-                        trackDepth: 20,
-                        thumbShape: NeumorphicShape.concave,
-                        activeThumbColor: Colors.pinkAccent,
-                        inactiveThumbColor: Colors.blueGrey,
+                ),
+              ),
+              SizedBox(height: size.height * 0.05),
+              Column(
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          'Voulez vous être volontaire ?',
+                        ),
                       ),
-                      duration: Duration(milliseconds: 400),
-                      isEnabled: isEnabled1,
-                      value: isChecked1,
-                      onChanged:  (value) {
-                        setState(() {
-                          isChecked1 = value;
-                        });
-                      },
-                    ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: NeumorphicSwitch(
+                          style: NeumorphicSwitchStyle(
+                            lightSource: LightSource.topLeft,
+                            trackDepth: 20,
+                            thumbShape: NeumorphicShape.concave,
+                            activeThumbColor: Colors.pinkAccent,
+                            inactiveThumbColor: Colors.blueGrey,
+                          ),
+                          duration: Duration(milliseconds: 400),
+                          isEnabled: isEnabled1,
+                          value: isChecked1,
+                          onChanged:  (value) {
+                            setState(() {
+                              isChecked1 = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: size.height * 0.02),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          'Activer notifications par e-mail',
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: NeumorphicSwitch(
+                          style: NeumorphicSwitchStyle(
+                            lightSource: LightSource.topLeft,
+                            trackDepth: 20,
+                            thumbShape: NeumorphicShape.concave,
+                            activeThumbColor: Colors.pinkAccent,
+                            inactiveThumbColor: Colors.blueGrey,
+                          ),
+                          duration: Duration(milliseconds: 400),
+                          isEnabled: isEnabled2,
+                          value: isChecked2,
+                          onChanged:  (value) {
+                            setState(() {
+                              isChecked2 = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          'Activer notifications par sms',
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: NeumorphicSwitch(
+                          style: NeumorphicSwitchStyle(
+                            lightSource: LightSource.topLeft,
+                            trackDepth: 20,
+                            thumbShape: NeumorphicShape.concave,
+                            activeThumbColor: Colors.pinkAccent,
+                            inactiveThumbColor: Colors.blueGrey,
+                          ),
+                          duration: Duration(milliseconds: 400),
+                          isEnabled: isEnabled3,
+                          value: isChecked3,
+                          onChanged:  (value) {
+                            setState(() {
+                              isChecked3 = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          'Activer notifications par icone et/ou son',
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: NeumorphicSwitch(
+                          style: NeumorphicSwitchStyle(
+                            lightSource: LightSource.topLeft,
+                            trackDepth: 20,
+                            thumbShape: NeumorphicShape.concave,
+                            activeThumbColor: Colors.pinkAccent,
+                            inactiveThumbColor: Colors.blueGrey,
+                          ),
+                          duration: Duration(milliseconds: 400),
+                          isEnabled: isEnabled4,
+                          value: isChecked4,
+                          onChanged:  (value) {
+                            setState(() {
+                              isChecked4 = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          'Activer notifications par appel',
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: NeumorphicSwitch(
+                          style: NeumorphicSwitchStyle(
+                            lightSource: LightSource.topLeft,
+                            trackDepth: 20,
+                            thumbShape: NeumorphicShape.concave,
+                            activeThumbColor: Colors.pinkAccent,
+                            inactiveThumbColor: Colors.blueGrey,
+                          ),
+                          duration: Duration(milliseconds: 400),
+                          isEnabled: isEnabled5,
+                          value: isChecked5,
+                          onChanged:  (value) {
+                            setState(() {
+                              isChecked5 = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          'Partager mes informations ?',
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: NeumorphicSwitch(
+                          style: NeumorphicSwitchStyle(
+                            lightSource: LightSource.topLeft,
+                            trackDepth: 20,
+                            thumbShape: NeumorphicShape.concave,
+                            activeThumbColor: Colors.pinkAccent,
+                            inactiveThumbColor: Colors.blueGrey,
+                          ),
+                          duration: Duration(milliseconds: 400),
+                          isEnabled: isEnabled6,
+                          value: isChecked6,
+                          onChanged:  (value) {
+                            setState(() {
+                              isChecked6 = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.02),
                 ],
               ),
-              SizedBox(height: size.height * 0.02),
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Text(
-                      'Activer notifications par e-mail',
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: NeumorphicSwitch(
-                      style: NeumorphicSwitchStyle(
-                        lightSource: LightSource.topLeft,
-                        trackDepth: 20,
-                        thumbShape: NeumorphicShape.concave,
-                        activeThumbColor: Colors.pinkAccent,
-                        inactiveThumbColor: Colors.blueGrey,
-                      ),
-                      duration: Duration(milliseconds: 400),
-                      isEnabled: isEnabled2,
-                      value: isChecked2,
-                      onChanged:  (value) {
-                        setState(() {
-                          isChecked2 = value;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: size.height * 0.02),
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Text(
-                      'Activer notifications par sms',
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: NeumorphicSwitch(
-                      style: NeumorphicSwitchStyle(
-                        lightSource: LightSource.topLeft,
-                        trackDepth: 20,
-                        thumbShape: NeumorphicShape.concave,
-                        activeThumbColor: Colors.pinkAccent,
-                        inactiveThumbColor: Colors.blueGrey,
-                      ),
-                      duration: Duration(milliseconds: 400),
-                      isEnabled: isEnabled3,
-                      value: isChecked3,
-                      onChanged:  (value) {
-                        setState(() {
-                          isChecked3 = value;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: size.height * 0.02),
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Text(
-                      'Activer notifications par icone et/ou son',
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: NeumorphicSwitch(
-                      style: NeumorphicSwitchStyle(
-                        lightSource: LightSource.topLeft,
-                        trackDepth: 20,
-                        thumbShape: NeumorphicShape.concave,
-                        activeThumbColor: Colors.pinkAccent,
-                        inactiveThumbColor: Colors.blueGrey,
-                      ),
-                      duration: Duration(milliseconds: 400),
-                      isEnabled: isEnabled4,
-                      value: isChecked4,
-                      onChanged:  (value) {
-                        setState(() {
-                          isChecked4 = value;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: size.height * 0.02),
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Text(
-                      'Activer notifications par appel',
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: NeumorphicSwitch(
-                      style: NeumorphicSwitchStyle(
-                        lightSource: LightSource.topLeft,
-                        trackDepth: 20,
-                        thumbShape: NeumorphicShape.concave,
-                        activeThumbColor: Colors.pinkAccent,
-                        inactiveThumbColor: Colors.blueGrey,
-                      ),
-                      duration: Duration(milliseconds: 400),
-                      isEnabled: isEnabled5,
-                      value: isChecked5,
-                      onChanged:  (value) {
-                        setState(() {
-                          isChecked5 = value;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: size.height * 0.02),
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Text(
-                      'Partager mes informations ?',
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: NeumorphicSwitch(
-                      style: NeumorphicSwitchStyle(
-                        lightSource: LightSource.topLeft,
-                        trackDepth: 20,
-                        thumbShape: NeumorphicShape.concave,
-                        activeThumbColor: Colors.pinkAccent,
-                        inactiveThumbColor: Colors.blueGrey,
-                      ),
-                      duration: Duration(milliseconds: 400),
-                      isEnabled: isEnabled6,
-                      value: isChecked6,
-                      onChanged:  (value) {
-                        setState(() {
-                          isChecked6 = value;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: size.height * 0.02),
+              SizedBox(height: size.height * 0.03)
             ],
           ),
-          SizedBox(height: size.height * 0.03)
-        ],
-      ),
+        ),
+        DraggableFab(
+          child: FloatingActionButton(
+            onPressed: (){print('clic');},
+            child: Icon(Icons.warning),
+          ),
+        ),
+      ],
     );
   }
 }
